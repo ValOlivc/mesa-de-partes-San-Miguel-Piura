@@ -1,0 +1,253 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.dashboard-container {
+    font-family: "Poppins", sans-serif;
+    background-color: #f8f9fc;
+    min-height: 100vh;
+    color: #333;
+}
+
+.dashboard-content {
+    padding: 2rem;
+}
+
+.summary-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.card {
+    background-color: #fff;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: transform 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+}
+
+.card-info p {
+    color: #888;
+    font-size: 0.9rem;
+    margin-bottom: 0.3rem;
+}
+
+.card-info h2 {
+    font-size: 1.8rem;
+    font-weight: 700;
+}
+
+.card-icon {
+    font-size: 2rem;
+}
+
+.card-icon.blue {
+    color: #2b6cb0;
+}
+
+.card-icon.orange {
+    color: #dd6b20;
+}
+
+.card-icon.green {
+    color: #38a169;
+}
+
+.card-icon.red {
+    color: #e53e3e;
+}
+
+
+/* === FILTROS === */
+
+.filters-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.search-container {
+    display: flex;
+    align-items: center;
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+}
+
+.search-container input {
+    border: none;
+    outline: none;
+    padding: 0.8rem 1rem;
+    width: 280px;
+    font-size: 0.9rem;
+}
+
+.filter-btn {
+    background-color: #007bff;
+    border: none;
+    border-radius: 0px 8px 8px 0px;
+    color: #fff;
+    padding: 21px 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.filter-btn:hover {
+    background-color: #0056b3;
+}
+
+.status-filter {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 0.8rem 1rem;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+
+/* === TABLA === */
+
+.table-section {
+    background-color: #fff;
+    border-radius: 12px;
+    padding: 1rem 1.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.table-header {
+    display: flex;
+    justify-content: flex-end;
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 0.8rem;
+}
+
+.doc-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.doc-table th {
+    text-align: left;
+    color: #666;
+    font-weight: 600;
+    padding: 0.75rem;
+    border-bottom: 2px solid #eee;
+    font-size: 0.9rem;
+}
+
+.doc-table td {
+    padding: 0.9rem 0.75rem;
+    border-bottom: 1px solid #f1f1f1;
+    font-size: 0.9rem;
+}
+
+.doc-table tbody tr:hover {
+    background-color: #f8fafc;
+}
+
+.texto-observacion {
+    color: #df0000;
+    font-size: 10px;
+}
+
+
+/* === ETIQUETAS === */
+
+.tag {
+    border-radius: 12px;
+    padding: 0.3rem 0.8rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+.tag.alta {
+    background-color: #ffe5e5;
+    color: #c53030;
+}
+
+.tag.baja {
+    background-color: #e6f6e6;
+    color: #276749;
+}
+
+.status {
+    border-radius: 8px;
+    padding: 0.3rem 0.8rem;
+    font-weight: 600;
+    font-size: 0.8rem;
+    text-transform: capitalize;
+}
+
+.status.pendiente {
+    background-color: #fff1d6;
+    color: #b7791f;
+}
+
+.status.aceptado {
+    background-color: #e6f4ff;
+    color: #007bff;
+}
+
+.status.rechazado {
+    background-color: #ffe4e6;
+    color: #c53030;
+}
+
+
+/* === ACCIONES === */
+
+.actions {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.view-btn {
+    border: none;
+    border-radius: 8px;
+    background-color: #ffffff00;
+    padding: 0.3rem 0.8rem;
+}
+
+.view-btn:hover {
+    background-color: #d4d4d4;
+    padding: 0.3rem 0.8rem;
+}
+
+.view-icon {
+    color: #13bb5e;
+    cursor: pointer;
+}
+
+.menu-icon {
+    color: #777;
+    cursor: pointer;
+}
+
+.view-icon:hover {
+    color: #007e2a;
+}
+
+.menu-icon:hover {
+    color: #333;
+}

@@ -1,7 +1,7 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import Login from "./pages/Login";
-import DashboardPrinc from "./pages/DashboardPrinc";
+import Login from "../presentación/pages/Login";
+import DashboardPrinc from "../presentación/pages/DashboardPrinc";
 
 function App() {
   return (

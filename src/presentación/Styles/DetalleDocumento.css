@@ -1,0 +1,215 @@
+/* === Fondo oscuro del modal === */
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.45);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+
+/* === Contenedor del modal === */
+
+.modal-container {
+    background-color: white;
+    width: 400px;
+    max-height: 90vh;
+    border-radius: 12px;
+    padding: 20px;
+    overflow-y: auto;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+}
+
+
+/* === Encabezado === */
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 8px;
+    margin-bottom: 15px;
+}
+
+.modal-header h2 {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    color: #666;
+}
+
+
+/* === Cuerpo del modal === */
+
+.info-box {
+    background-color: #f9fafb;
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-size: 13px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.info-box p {
+    margin: 6px 0;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+
+/* === Estado === */
+
+.estado h4 {
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.estado-tag {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 15px;
+}
+
+.estado-tag.pendiente {
+    background-color: #fef3c7;
+    color: #92400e;
+}
+
+.estado-tag.aceptado {
+    background-color: #d1fae5;
+    color: #065f46;
+}
+
+.estado-tag.rechazado {
+    background-color: #fee2e2;
+    color: #991b1b;
+}
+
+
+/* === Campos === */
+
+.cantidadDoc textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+.cantidadDoc h4 {
+    margin-bottom: 10px;
+}
+
+.descripcion textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+.descripcion h4 {
+    margin-bottom: 10px;
+}
+
+.adjunto-box iframe {
+    height: 200px;
+    width: 100%;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    margin-bottom: 20px;
+}
+
+
+/* === Asignación === */
+
+.adjunto h4 {
+    margin-bottom: 10px;
+}
+
+.asignacion h4 {
+    margin-bottom: 10px;
+}
+
+.asignacion-box {
+    display: flex;
+    gap: 10px;
+}
+
+.asignacion-box input {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+    height: 39px;
+}
+
+.asignacion-box select {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+    height: 39px;
+}
+
+
+/* === Botones === */
+
+.acciones {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+}
+
+.btn-rechazar,
+.btn-aceptar {
+    flex: 1;
+    margin: 0 5px;
+    padding: 10px 12px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    color: white;
+}
+
+.btn-rechazar {
+    background-color: #dc2626;
+}
+
+.btn-aceptar {
+    background-color: #2563eb;
+}
+
+.btn-rechazar:hover {
+    background-color: #b91c1c;
+}
+
+.btn-aceptar:hover {
+    background-color: #1d4ed8;
+}

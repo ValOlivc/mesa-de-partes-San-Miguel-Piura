@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import {useNavigate} from "react-router-dom"
 import { signInWithEmailAndPassword } from "firebase/auth";
-import {auth} from "../firebaseConfig"
+import {auth} from "../../data/Firebase/firebaseConfig"
 import "../Styles/login.css"
-import logo from "../assets/logo-san-miguel.jpg"
-import colegio from "../assets/Colegio-San-Miguel-.jpg"
+import logo from "../../assets/logo-san-miguel.jpg"
+import colegio from "../../assets/Colegio-San-Miguel-.jpg"
 
 const Login = () => {
     const navigate = useNavigate();
