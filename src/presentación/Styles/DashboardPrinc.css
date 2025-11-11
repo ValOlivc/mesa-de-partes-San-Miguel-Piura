@@ -200,6 +200,11 @@
     font-size: 10px;
 }
 
+.obs {
+    color: #dd0000;
+    font-size: 11px;
+}
+
 
 /* === ETIQUETAS === */
 
@@ -229,6 +234,11 @@
 .tag.baja {
     background-color: #e6f6e6;
     color: #282767;
+}
+
+.tag.rechazado {
+    background-color: #ffe4e6;
+    color: #c53030;
 }
 
 .status {
@@ -291,4 +301,29 @@
 
 .menu-icon:hover {
     color: #333;
+}
+
+.admin-layout {
+    display: flex;
+    min-height: 100vh;
+    background: #f9f9f9;
+}
+
+.main-content {
+    flex: 1;
+    padding: 20px 30px;
+    overflow-y: auto;
+}
+
+.page-title {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.table-section {
+    background: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }

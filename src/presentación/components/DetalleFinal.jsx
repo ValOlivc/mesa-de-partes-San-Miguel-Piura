@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-import "../Styles/DetalleDocumento.css";
+// src/pages/DetalleDocumento.jsx
+import React from "react";
+import "../Styles/DetalleFinal.css";
 import {
   FaTimes,
   FaEnvelope,
@@ -10,119 +11,108 @@ import {
   FaMapMarkerAlt,
 } from "react-icons/fa";
 
-const DetalleDocumento = ({ documento, onClose, onActualizarEstado }) => {
-  const [mostrarRechazo, setMostrarRechazo] = useState(false);
-
+const DetalleDocumento = ({ documento, onClose }) => {
   if (!documento) return null;
 
   const fut = documento.datosFUT || {};
 
-  const handleConfirmar = (observacion) => {
-    const docActualizado = {
-      ...documento,
-      estado: "Rechazado",
-      observacion: observacion || "",
-    };
-
-    if (onActualizarEstado) onActualizarEstado(docActualizado);
-
-    setMostrarRechazo(false);
-    onClose();
-  };
-
-  // ✅ Normalizamos el estado para el CSS
-  const estadoClase = (documento.estado || "En proceso")
-    .toLowerCase()
-    .replace(/\s+/g, "-");
+  // ✅ Normalizamos el estado para clases CSS
+  const estado = documento.estado || "En proceso";
+  const estadoClase = estado.toLowerCase().replace(/\s+/g, "-");
 
   return (
     <div className="modal-overlay">
       <div className="modal-container">
+        {/* Encabezado */}
         <div className="modal-header">
-          <h2>Detalles del Documento</h2>
+          <h2>Detalle Final del Documento</h2>
           <button className="close-btn" onClick={onClose}>
             <FaTimes />
           </button>
         </div>
 
+        {/* Contenido */}
         <div className="modal-content">
-          <div className="doc-info">
-            <div className="info-box">
-              <p>
-                <FaFileAlt /> <strong>Código:</strong> {documento.uid}
-              </p>
-              <p>
-                <FaEnvelope /> <strong>Correo Electrónico:</strong> {documento.email}
-              </p>
-              <p>
-                <FaUserCircle /> <strong>DNI:</strong> {fut.dni}
-              </p>
-              <p>
-                <FaPhone /> <strong>Teléfono:</strong> {fut.telefono}
-              </p>
-              <p>
-                <FaMapMarkerAlt /> <strong>Domicilio:</strong> {fut.domicilio}
-              </p>
-              <p>
-                <FaCalendarAlt /> <strong>Fecha de Solicitud:</strong> {fut.fecha}
-              </p>
-            </div>
+          <div className="info-box">
+            <p>
+              <FaFileAlt /> <strong>Código:</strong> {documento.uid}
+            </p>
+            <p>
+              <FaEnvelope /> <strong>Correo:</strong> {documento.email}
+            </p>
+            <p>
+              <FaUserCircle /> <strong>DNI:</strong> {fut.dni}
+            </p>
+            <p>
+              <FaPhone /> <strong>Teléfono:</strong> {fut.telefono}
+            </p>
+            <p>
+              <FaMapMarkerAlt /> <strong>Domicilio:</strong> {fut.domicilio}
+            </p>
+            <p>
+              <FaCalendarAlt /> <strong>Fecha de Solicitud:</strong> {fut.fecha}
+            </p>
           </div>
 
           <div className="tipoDoc">
-            <h4>Tipo de Documento: {documento.tipoTramite}</h4>
+            <h4>Tipo de Documento</h4>
+            <p>{documento.tipoTramite}</p>
           </div>
 
           <div className="estado">
-            <h4>Estado</h4>
-            {/* ✅ Clase dinámica segura */}
-            <span className={`estado-tag ${estadoClase}`}>
-              {documento.estado || "En proceso"}
-            </span>
+            <h4>Estado del Documento</h4>
+            <span className={`estado-tag ${estadoClase}`}>{estado}</span>
           </div>
 
-          <div className="cantidadDoc">
-            <h4>Cantidad de documentos</h4>
-            <textarea type="text" value={fut.documentos || ""} readOnly />
-          </div>
+          {/* Mostrar información según el estado */}
+          {estado.toLowerCase() === "rechazado" && (
+            <div className="observacion">
+              <h4>Motivo del Rechazo</h4>
+              <p>{documento.mensaje || "Sin observación registrada."}</p>
+            </div>
+          )}
+
+          {estado.toLowerCase() === "aceptado" && (
+            <div className="asignacion">
+              <h4>Área de Derivación</h4>
+              <p>{documento.areaAsignada || "Área no especificada."}</p>
+            </div>
+          )}
 
           <div className="descripcion">
             <h4>Descripción</h4>
             <textarea type="text" value={fut.fundamentos || ""} readOnly />
           </div>
 
-          <div className="adjunto">
-            <h4>Vaucher</h4>
-            <div className="adjunto-box">
-              <iframe src={documento.vaucherUrl || documento.solicitudUrl}></iframe>
-            </div>
-          </div>
+          <div className="adjuntos">
+            <h4>Documentos Adjuntos</h4>
 
-          <div className="adjunto">
-            <h4>Solicitud</h4>
-            <div className="adjunto-box">
-              <iframe src={documento.solicitudUrl}></iframe>
-            </div>
-          </div>
+            {Object.entries(documento)
+              .filter(([key, value]) => key.toLowerCase().includes("url") && value)
+              .map(([key, url], index) => {
+                const nombreLimpio = key
+                  .replace(/url/gi, "")
+                  .replace(/([A-Z])/g, " $1")
+                  .replace(/^./, (str) => str.toUpperCase())
+                  .trim();
 
-          <div className="adjunto">
-            <h4>DNI Remitente</h4>
-            <div className="adjunto-box">
-              <iframe src={documento.dniApoderadoUrl}></iframe>
-            </div>
-          </div>
-
-          <div className="asignacion">
-            <h4># Asignación de Documento</h4>
-            <div className="asignacion-box">
-              <input type="text" placeholder="N° de expediente" />
-              <select>
-                <option>Asignar prioridad</option>
-                <option>Alta</option>
-                <option>Media</option>
-                <option>Baja</option>
-              </select>
-            </div>
+                return (
+                  <div key={index} className="adjunto-card">
+                    <div className="adjunto-header">
+                      <h5>{nombreLimpio}</h5>
+                      <button
+                        className="btn-ver-pdf"
+                        onClick={() => window.open(url, "_blank")}
+                      >
+                        Ver PDF
+                      </button>
+                    </div>
+                    <div className="adjunto-box">
+                      <iframe src={url} title={nombreLimpio}></iframe>
+                    </div>
+                  </div>
+                );
+              })}
           </div>
         </div>
       </div>

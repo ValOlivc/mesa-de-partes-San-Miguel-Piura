@@ -1,66 +1,107 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import Header from "../components/Header";
+import Sidebar from "../components/Sidebar";
 import "../Styles/DashboardPrinc.css";
 import TarjetRes from "../components/TarjetasResumen";
 import { FaEye, FaEllipsisH } from "react-icons/fa";
 import DetalleDocumento from "../components/DetalleDocumento";
 import ModalRechazo from "../components/ModalRechazo";
+import DetalleFinal from "../components/DetalleFinal";
 import { listenTramites, updateTramite } from "../../core/services/tramitesService";
 import BarraBusqueda from "../components/BarraBusqueda";
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { auth, db } from "../../data/Firebase/firebaseConfig";
 
 const DashboardPrinc = () => {
   const [documentos, setDocumentos] = useState([]);
   const [documentosFiltrados, setDocumentosFiltrados] = useState([]);
   const [selectedDoc, setSelectedDoc] = useState(null);
-  const [mostrarRechazo, setMostrarRechazo] = useState(false);
+  const [modalActivo, setModalActivo] = useState(null);
   const [filtroEstado, setFiltroEstado] = useState("Todos");
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [ordenFechaAsc, setOrdenFechaAsc] = useState(true);
 
-  // 🔹 Cargar documentos desde Firestore
+  const handleToggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
+  const handleCloseSidebar = () => setIsSidebarOpen(false);
+
   useEffect(() => {
-  const unsubscribe = listenTramites((data) => {
-    setDocumentos(data);
-  });
-  return () => unsubscribe();
-}, []);
+    const unsubscribe = listenTramites((data) => {
+      setDocumentos(data);
+      setDocumentosFiltrados(data);
+    });
+    return () => unsubscribe();
+  }, []);
 
-
-  // 🔹 Rechazar documento
-  const handleConfirmar = async (observacionTexto) => {
-    if (selectedDoc) {
-      await updateTramite(selectedDoc.id, {
-        estado: "Rechazado",
-        observacion: observacionTexto || "",
+  // Función para registrar movimiento en Firestore
+  const registrarMovimiento = async (accion, doc, observaciones = "") => {
+    try {
+      const usuario = auth.currentUser?.email || "Usuario desconocido";
+      await addDoc(collection(db, "historial"), {
+        accion,
+        usuario,
+        fecha: serverTimestamp(),
+        tramite: doc?.id || null,
+        estado: doc?.estado || null,
+        prioridad: doc?.prioridad || null,
+        areaAsignada: doc?.areaAsignada || null,
+        expediente: doc?.nExpediente || doc?.expediente || null,
+        observaciones,
       });
+    } catch (err) {
+      console.error("Error al registrar movimiento:", err);
     }
-    setMostrarRechazo(false);
+  };
+
+  const ordenarPorFecha = (lista) => {
+    return [...lista].sort((a, b) => {
+      const fechaA = new Date(a?.datosFUT?.fecha || "1970-01-01");
+      const fechaB = new Date(b?.datosFUT?.fecha || "1970-01-01");
+      return ordenFechaAsc ? fechaA - fechaB : fechaB - fechaA;
+    });
+  };
+
+  const handleOrdenarFecha = () => setOrdenFechaAsc(!ordenFechaAsc);
+
+  const handleActualizarDocumento = async (docActualizado, accion, observaciones) => {
+    // Actualizamos la lista local para que el cambio se vea inmediatamente
+    setDocumentos((prev) =>
+      prev.map((d) => (d.id === docActualizado.id ? docActualizado : d))
+    );
+    setDocumentosFiltrados((prev) =>
+      prev.map((d) => (d.id === docActualizado.id ? docActualizado : d))
+    );
+
+    // Registramos el movimiento
+    await registrarMovimiento(accion, docActualizado, observaciones);
+  };
+
+  const abrirModal = (tipo, doc) => {
+    setSelectedDoc(doc);
+    setModalActivo(tipo);
+  };
+
+  const cerrarModal = () => {
+    setModalActivo(null);
     setSelectedDoc(null);
   };
 
-  // 🔹 Abrir modal de rechazo
-  const handleAbrirRechazo = (doc) => {
-    setSelectedDoc(doc);
-    setMostrarRechazo(doc);
-  };
-
-  // 🔹 Filtrar por estado (aplicado sobre los documentos filtrados por búsqueda)
-  const documentosVisibles = documentosFiltrados.filter((doc) => {
-    if (filtroEstado === "Todos") return true;
-    if (filtroEstado === "Pendiente") return doc.estado === "Pendiente";
-    return doc.estado === filtroEstado;
-  });
+  const documentosVisibles = useMemo(() => {
+    const filtrados = documentosFiltrados.filter((doc) => {
+      return filtroEstado === "Todos" || doc.estado === filtroEstado;
+    });
+    return ordenarPorFecha(filtrados);
+  }, [documentosFiltrados, filtroEstado, ordenFechaAsc]);
 
   return (
     <div className="dashboard-container">
-      <Header />
+      <Header onToggleSidebar={handleToggleSidebar} />
+      <Sidebar isOpen={isSidebarOpen} onClose={handleCloseSidebar} />
 
       <main className="dashboard-content">
-        {/* Tarjetas resumen dinámicas */}
         <TarjetRes documentos={documentos} />
 
-        {/* Barra de búsqueda y filtro por estado */}
         <section className="filters-section">
           <BarraBusqueda documentos={documentos} onFiltrar={setDocumentosFiltrados} />
-
           <select
             className="status-filter"
             value={filtroEstado}
@@ -73,62 +114,52 @@ const DashboardPrinc = () => {
           </select>
         </section>
 
-        {/* Tabla de documentos */}
         <section className="table-section">
           <table className="doc-table">
             <thead>
               <tr>
                 <th>CÓDIGO</th>
                 <th>TIPO DE DOCUMENTO</th>
-                <th>FECHA</th>
+                <th onClick={handleOrdenarFecha} style={{ cursor: "pointer" }}>
+                  FECHA {ordenFechaAsc ? "▲" : "▼"}
+                </th>
                 <th>PRIORIDAD</th>
                 <th>ESTADO</th>
                 <th>ACCIONES</th>
               </tr>
             </thead>
-
             <tbody>
               {documentosVisibles.map((doc) => {
                 const fut = doc.datosFUT || {};
                 return (
                   <tr key={doc.id}>
                     <td>SM-{doc.id || "—"}</td>
-                    <td>{doc.tipoTramite || "—"}</td>
+                    <td>
+                      {doc.tipoTramite || "—"}
+                      <p className="obs">{doc.mensaje ? `Observaciones: ${doc.mensaje}` : ""}</p>
+                    </td>
                     <td>{fut.fecha || "—"}</td>
                     <td>
-                      <span className={`tag ${(doc.prioridad || "Asignar")
-                        .toLowerCase()
-                        .replace(/\s+/g, "-")
-                      }`}
-                      >
-                        {doc.prioridad || "Asignar"}</span>
+                      <span className={`tag ${(doc.prioridad || "Asignar").toLowerCase().replace(/\s+/g, "-")}`}>
+                        {doc.prioridad || "Asignar"}
+                      </span>
                     </td>
                     <td>
-                      <span
-                        className={`status ${
-                          (doc.estado || "Pendiente")
-                            .toLowerCase()
-                            .replace(/\s+/g, "-")
-                        }`}
-                      >
+                      <span className={`status ${(doc.estado || "Pendiente").toLowerCase().replace(/\s+/g, "-")}`}>
                         {doc.estado || "Pendiente"}
                       </span>
                     </td>
                     <td className="actions">
-                      {doc.estado !== "Rechazado" && doc.estado !=="Aceptado" && (
-                        <button
-                          className="view-btn"
-                          onClick={() => setSelectedDoc(doc)}
-                        >
+                      {doc.estado !== "Rechazado" && doc.estado !== "Aceptado" && (
+                        <button className="view-btn" onClick={() => abrirModal("detalle", doc)}>
                           <FaEye className="view-icon" /> Ver
                         </button>
                       )}
-                      <button
-                        className="btn-opciones"
-                        onClick={() => handleAbrirRechazo(doc)}
-                      >
-                        <FaEllipsisH className="menu-icon" />
-                      </button>
+                      {doc.estado !== "Pendiente" && (
+                        <button className="btn-opciones" onClick={() => abrirModal("detalleFinal", doc)}>
+                          <FaEllipsisH className="menu-icon" />
+                        </button>
+                      )}
                     </td>
                   </tr>
                 );
@@ -138,20 +169,23 @@ const DashboardPrinc = () => {
         </section>
       </main>
 
-      {/* Modal Detalle */}
-      {selectedDoc && !mostrarRechazo && (
+      {modalActivo === "detalle" && selectedDoc && (
         <DetalleDocumento
           documento={selectedDoc}
-          onClose={() => setSelectedDoc(null)}
+          onClose={cerrarModal}
+          onActualizarEstado={(docActualizado, accion = "actualizacion_documento", observaciones = "") =>
+            handleActualizarDocumento(docActualizado, accion, observaciones)
+          }
         />
       )}
 
-      {/* Modal Rechazo */}
-      {mostrarRechazo && (
-        <ModalRechazo
+      {modalActivo === "detalleFinal" && selectedDoc && (
+        <DetalleFinal
           documento={selectedDoc}
-          onClose={() => setMostrarRechazo(false)}
-          onConfirm={handleConfirmar}
+          onClose={cerrarModal}
+          onActualizarEstado={(docActualizado, accion = "actualizacion_documento", observaciones = "") =>
+            handleActualizarDocumento(docActualizado, accion, observaciones)
+          }
         />
       )}
     </div>
