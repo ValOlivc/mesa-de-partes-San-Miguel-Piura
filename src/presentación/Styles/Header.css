@@ -54,8 +54,10 @@
     margin-left: 60rem;
     font-size: 24px;
     color: white;
+    background-color: #4b0000;
     cursor: pointer;
     transition: color 0.3s ease;
+    border: none;
 }
 
 .sidebar-deployment:hover {

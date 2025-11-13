@@ -59,7 +59,7 @@
 
 .filtro-fechas input[type="date"]:focus {
     outline: none;
-    border-color: #00a8ff;
+    border-color: #00aaff;
     box-shadow: 0 0 4px rgba(0, 168, 255, 0.3);
 }
 
@@ -75,7 +75,7 @@
 }
 
 .filtro-fechas button:hover {
-    background-color: #0097e6;
+    background-color: #006094;
 }
 
 
@@ -98,7 +98,7 @@
 }
 
 .tabla-historial thead {
-    background-color: #00a8ff;
+    background-color: #46464697;
     color: #fff;
     text-transform: uppercase;
     font-size: 13px;

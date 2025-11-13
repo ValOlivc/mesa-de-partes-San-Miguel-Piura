@@ -75,7 +75,6 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    flex-wrap: wrap;
     gap: 1rem;
     margin-bottom: 1.5rem;
 }
@@ -120,6 +119,7 @@
     padding: 0.8rem 1rem;
     cursor: pointer;
     font-size: 0.9rem;
+    width: 15rem;
 }
 
 
@@ -167,28 +167,33 @@
 .table-section {
     background-color: #fff;
     border-radius: 12px;
-    padding: 1rem 1.5rem;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
 }
 
 .doc-table {
     width: 100%;
     border-collapse: collapse;
+    table-layout: auto;
 }
 
 .doc-table th {
+    background-color: #fafafa;
     text-align: left;
-    color: #666;
     font-weight: 600;
-    padding: 0.75rem;
-    border-bottom: 2px solid #eee;
     font-size: 0.9rem;
+    color: #333;
+    padding: 1rem 0.75rem;
+    border-bottom: 2px solid #eaeaea;
 }
 
 .doc-table td {
-    padding: 0.9rem 0.75rem;
-    border-bottom: 1px solid #f1f1f1;
-    font-size: 0.9rem;
+    padding: 1.1rem 0.9rem;
+    /* más espacio vertical */
+    border-bottom: 1px solid #f0f0f0;
+    font-size: 0.92rem;
+    color: #444;
+    vertical-align: middle;
+    /* alinea íconos y texto */
 }
 
 .doc-table tbody tr:hover {
@@ -202,6 +207,11 @@
 
 .obs {
     color: #dd0000;
+    font-size: 11px;
+}
+
+.exp {
+    color: #00931d;
     font-size: 11px;
 }
 
@@ -267,12 +277,6 @@
 
 /* === ACCIONES === */
 
-.actions {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
 .view-btn {
     border: none;
     border-radius: 8px;
@@ -321,9 +325,10 @@
     font-weight: 600;
 }
 
-.table-section {
-    background: #fff;
-    border-radius: 10px;
-    padding: 20px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+.btn-opciones {
+    background-color: #00000000;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

@@ -1,14 +1,27 @@
-import React, { useMemo } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import "../Styles/Header.css";
 import { FaFileAlt, FaClock, FaCheckCircle, FaTimesCircle } from "react-icons/fa";
+import { listenTramites } from "../../core/services/tramitesService"; // 👈 IMPORTANTE
 
-const TarjetRes = ({ documentos = [] }) => {
+const TarjetRes = () => {
+  const [documentos, setDocumentos] = useState([]);
+
+  // 🔹 Escucha los trámites desde el servicio (ya validado)
+  useEffect(() => {
+    const unsubscribe = listenTramites((data) => setDocumentos(data));
+    return () => unsubscribe();
+  }, []);
+
   // ✅ useMemo evita recalcular en cada render
   const { total, pendientes, aceptados, rechazados } = useMemo(() => {
     const total = documentos.length;
-    const pendientes = documentos.filter(doc => doc.estado === "Pendiente" || !doc.estado).length;
-    const aceptados = documentos.filter(doc => doc.estado === "Aceptado" || doc.estado === "Aprobado").length;
-    const rechazados = documentos.filter(doc => doc.estado === "Rechazado").length;
+    const pendientes = documentos.filter(
+      (doc) => doc.estado === "Pendiente" || !doc.estado
+    ).length;
+    const aceptados = documentos.filter(
+      (doc) => doc.estado === "Aceptado" || doc.estado === "Aprobado"
+    ).length;
+    const rechazados = documentos.filter((doc) => doc.estado === "Rechazado").length;
 
     return { total, pendientes, aceptados, rechazados };
   }, [documentos]);

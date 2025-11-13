@@ -18,6 +18,7 @@ const DetalleDocumento = ({ documento, onClose }) => {
 
   // ✅ Normalizamos el estado para clases CSS
   const estado = documento.estado || "En proceso";
+  const expediente = documento.nExpediente || "Sin asignar";
   const estadoClase = estado.toLowerCase().replace(/\s+/g, "-");
 
   return (
@@ -62,6 +63,11 @@ const DetalleDocumento = ({ documento, onClose }) => {
           <div className="estado">
             <h4>Estado del Documento</h4>
             <span className={`estado-tag ${estadoClase}`}>{estado}</span>
+          </div>
+
+          <div className="estado">
+            <h4>N° Expediente</h4>
+            <span className={`estado-tag ${estadoClase}`}>{expediente}</span>
           </div>
 
           {/* Mostrar información según el estado */}

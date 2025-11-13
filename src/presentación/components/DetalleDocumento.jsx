@@ -12,10 +12,10 @@ import {
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../../data/Firebase/firebaseConfig";
 import ModalRechazo from "./ModalRechazo";
-import ModalAceptar from "./ModalAceptar";
+import ModalAsignarArea from "./ModalAsignarArea";
 
 const DetalleDocumento = ({ documento, onClose, onActualizarEstado }) => {
-  const [mostrarAceptar, setMostrarAceptar] = useState(false);
+  const [mostrarAsignar, setMostrarAsignar] = useState(false);
   const [mostrarRechazo, setMostrarRechazo] = useState(false);
   const [nExpediente, setNExpediente] = useState(documento.nExpediente || "");
   const [prioridad, setPrioridad] = useState(documento.prioridad || "");
@@ -24,10 +24,10 @@ const DetalleDocumento = ({ documento, onClose, onActualizarEstado }) => {
 
   const fut = documento.datosFUT || {};
 
-  // ✅ Aceptar documento
-  const handleAceptar = async () => {
+  // ✅ Guardar área asignada
+  const handleGuardarArea = async (areaSeleccionada) => {
     if (!nExpediente || !prioridad) {
-      alert("Por favor ingrese el N° de expediente y seleccione una prioridad antes de aceptar.");
+      alert("Por favor ingrese el N° de expediente y seleccione una prioridad antes de asignar un área.");
       return;
     }
 
@@ -37,6 +37,8 @@ const DetalleDocumento = ({ documento, onClose, onActualizarEstado }) => {
         estado: "Aceptado",
         nExpediente,
         prioridad,
+        areaAsignada: areaSeleccionada,
+        fechaAsignacion: new Date(),
       });
 
       const docActualizado = {
@@ -44,16 +46,21 @@ const DetalleDocumento = ({ documento, onClose, onActualizarEstado }) => {
         estado: "Aceptado",
         nExpediente,
         prioridad,
+        areaAsignada: areaSeleccionada,
       };
 
       if (onActualizarEstado) {
-        onActualizarEstado(docActualizado, "aceptar_tramite", `Documento SM- ${documento.id} aceptado con prioridad ${prioridad} y N° expediente ${nExpediente}`);
+        onActualizarEstado(
+          docActualizado,
+          "asignar_area",
+          `Documento SM-${documento.id} asignado al área ${areaSeleccionada}`
+        );
       }
 
-      setMostrarAceptar(false);
+      setMostrarAsignar(false);
       onClose();
     } catch (error) {
-      console.error("❌ Error al aceptar el documento:", error);
+      console.error("❌ Error al asignar el área:", error);
     }
   };
 
@@ -174,16 +181,21 @@ const DetalleDocumento = ({ documento, onClose, onActualizarEstado }) => {
           </div>
 
           <div className="acciones">
-            <button className="btn-rechazar" onClick={() => setMostrarRechazo(true)}>Rechazar Documento</button>
-            <button className="btn-aceptar" onClick={() => setMostrarAceptar(true)}>Aceptar Documento</button>
+            <button className="btn-rechazar" onClick={() => setMostrarRechazo(true)}>
+              Rechazar Documento
+            </button>
+            <button className="btn-aceptar" onClick={() => setMostrarAsignar(true)}>
+              Asignar Área
+            </button>
           </div>
 
-          {mostrarAceptar && (
-            <ModalAceptar
-              onClose={() => setMostrarAceptar(false)}
-              onConfirm={handleAceptar}
+          {mostrarAsignar && (
+            <ModalAsignarArea
+              onClose={() => setMostrarAsignar(false)}
+              onGuardar={handleGuardarArea}
             />
           )}
+
           {mostrarRechazo && (
             <ModalRechazo
               documento={documento}

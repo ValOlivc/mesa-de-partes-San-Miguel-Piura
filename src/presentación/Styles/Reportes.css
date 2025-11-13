@@ -1,0 +1,198 @@
+/* ======= CONTENEDOR GENERAL ======= */
+
+.reports-page {
+    font-family: "Poppins", sans-serif;
+    color: #1e293b;
+}
+
+
+/* ======= CONTENIDO PRINCIPAL ======= */
+
+.reports-content {
+    flex: 1;
+    padding: 2rem 2.5rem;
+    overflow-y: auto;
+    background-color: #f8fafc;
+}
+
+
+/* ======= ENCABEZADO ======= */
+
+.reports-header {
+    margin-bottom: 2rem;
+}
+
+.reports-header h2 {
+    font-size: 1.9rem;
+    font-weight: 600;
+    color: #1e293b;
+    margin-bottom: 0.3rem;
+}
+
+.reports-header p {
+    color: #64748b;
+    font-size: 1rem;
+}
+
+
+/* ======= TARJETAS DE RESUMEN ======= */
+
+.tarjetas-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.2rem;
+    margin-bottom: 2rem;
+}
+
+.tarjeta-resumen {
+    background: white;
+    border-radius: 1rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    padding: 1.2rem 1.5rem;
+    flex: 1 1 230px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.tarjeta-resumen:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
+}
+
+.tarjeta-resumen .icono {
+    font-size: 2rem;
+    opacity: 0.8;
+}
+
+.tarjeta-resumen h4 {
+    margin: 0;
+    font-size: 1rem;
+    color: #64748b;
+}
+
+.tarjeta-resumen p {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin: 0;
+    color: #1e293b;
+}
+
+
+/* Colores específicos según el tipo de tarjeta */
+
+.tarjeta-resumen.pendientes .icono {
+    color: #f59e0b;
+}
+
+.tarjeta-resumen.aceptados .icono {
+    color: #22c55e;
+}
+
+.tarjeta-resumen.rechazados .icono {
+    color: #ef4444;
+}
+
+.tarjeta-resumen.total .icono {
+    color: #3b82f6;
+}
+
+
+/* ======= SECCIÓN DE GRÁFICOS ======= */
+
+.charts-section {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+    gap: 1.8rem;
+}
+
+
+/* ======= TARJETAS DE GRÁFICO ======= */
+
+.chart-card {
+    background: white;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.chart-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+}
+
+.chart-card h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0.2rem;
+    color: #1e293b;
+}
+
+.chart-subtitle {
+    font-size: 0.9rem;
+    color: #94a3b8;
+    margin-bottom: 1rem;
+}
+
+
+/* ======= CONTENEDOR DE CADA GRÁFICO ======= */
+
+.chart-container {
+    width: 100%;
+    height: 250px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.chart-container.pie {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+/* ======= ESTADO DE CARGA ======= */
+
+.loading {
+    text-align: center;
+    font-size: 1.1rem;
+    color: #64748b;
+    margin-top: 3rem;
+}
+
+
+/* ======= SCROLLBAR PERSONALIZADO ======= */
+
+.reports-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.reports-content::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 4px;
+}
+
+.reports-content::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
+
+/* ======= RESPONSIVE ======= */
+
+@media (max-width: 768px) {
+    .reports-content {
+        padding: 1.2rem;
+    }
+    .charts-section {
+        grid-template-columns: 1fr;
+    }
+    .chart-card {
+        padding: 1rem;
+    }
+}
+
+.filtro-tiempo {
+    width: 10rem;
+}

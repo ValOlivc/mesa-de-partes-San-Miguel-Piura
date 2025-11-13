@@ -5,9 +5,8 @@ import "../Styles/DashboardPrinc.css";
 import TarjetRes from "../components/TarjetasResumen";
 import { FaEye, FaEllipsisH } from "react-icons/fa";
 import DetalleDocumento from "../components/DetalleDocumento";
-import ModalRechazo from "../components/ModalRechazo";
 import DetalleFinal from "../components/DetalleFinal";
-import { listenTramites, updateTramite } from "../../core/services/tramitesService";
+import { listenTramites} from "../../core/services/tramitesService";
 import BarraBusqueda from "../components/BarraBusqueda";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { auth, db } from "../../data/Firebase/firebaseConfig";
@@ -21,9 +20,11 @@ const DashboardPrinc = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [ordenFechaAsc, setOrdenFechaAsc] = useState(true);
 
+  //Sidebar
   const handleToggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
   const handleCloseSidebar = () => setIsSidebarOpen(false);
 
+  //Cambios a en tramites a tiempo real
   useEffect(() => {
     const unsubscribe = listenTramites((data) => {
       setDocumentos(data);
@@ -51,7 +52,7 @@ const DashboardPrinc = () => {
       console.error("Error al registrar movimiento:", err);
     }
   };
-
+  //Ordenar documentos por fecha
   const ordenarPorFecha = (lista) => {
     return [...lista].sort((a, b) => {
       const fechaA = new Date(a?.datosFUT?.fecha || "1970-01-01");
@@ -59,22 +60,19 @@ const DashboardPrinc = () => {
       return ordenFechaAsc ? fechaA - fechaB : fechaB - fechaA;
     });
   };
-
   const handleOrdenarFecha = () => setOrdenFechaAsc(!ordenFechaAsc);
-
+  //Actualiza documento y registra movimito
   const handleActualizarDocumento = async (docActualizado, accion, observaciones) => {
-    // Actualizamos la lista local para que el cambio se vea inmediatamente
+    
     setDocumentos((prev) =>
       prev.map((d) => (d.id === docActualizado.id ? docActualizado : d))
     );
     setDocumentosFiltrados((prev) =>
       prev.map((d) => (d.id === docActualizado.id ? docActualizado : d))
     );
-
-    // Registramos el movimiento
     await registrarMovimiento(accion, docActualizado, observaciones);
   };
-
+  //Abre y cirre modales
   const abrirModal = (tipo, doc) => {
     setSelectedDoc(doc);
     setModalActivo(tipo);
@@ -84,22 +82,19 @@ const DashboardPrinc = () => {
     setModalActivo(null);
     setSelectedDoc(null);
   };
-
+  //Filtra y ordena documentos visibles
   const documentosVisibles = useMemo(() => {
     const filtrados = documentosFiltrados.filter((doc) => {
       return filtroEstado === "Todos" || doc.estado === filtroEstado;
     });
     return ordenarPorFecha(filtrados);
   }, [documentosFiltrados, filtroEstado, ordenFechaAsc]);
-
   return (
     <div className="dashboard-container">
       <Header onToggleSidebar={handleToggleSidebar} />
       <Sidebar isOpen={isSidebarOpen} onClose={handleCloseSidebar} />
-
       <main className="dashboard-content">
-        <TarjetRes documentos={documentos} />
-
+        <TarjetRes />
         <section className="filters-section">
           <BarraBusqueda documentos={documentos} onFiltrar={setDocumentosFiltrados} />
           <select
@@ -113,7 +108,6 @@ const DashboardPrinc = () => {
             <option value="Rechazado">Rechazado</option>
           </select>
         </section>
-
         <section className="table-section">
           <table className="doc-table">
             <thead>
@@ -137,6 +131,8 @@ const DashboardPrinc = () => {
                     <td>
                       {doc.tipoTramite || "—"}
                       <p className="obs">{doc.mensaje ? `Observaciones: ${doc.mensaje}` : ""}</p>
+                      <p className="exp">{doc.nExpediente ? `Expediente: ${doc.nExpediente}` : ""}</p>
+                      <p className="exp">{doc.areaAsignada ? `Área: ${doc.areaAsignada}` : ""}</p>
                     </td>
                     <td>{fut.fecha || "—"}</td>
                     <td>
@@ -168,7 +164,6 @@ const DashboardPrinc = () => {
           </table>
         </section>
       </main>
-
       {modalActivo === "detalle" && selectedDoc && (
         <DetalleDocumento
           documento={selectedDoc}
@@ -178,7 +173,6 @@ const DashboardPrinc = () => {
           }
         />
       )}
-
       {modalActivo === "detalleFinal" && selectedDoc && (
         <DetalleFinal
           documento={selectedDoc}
@@ -191,5 +185,4 @@ const DashboardPrinc = () => {
     </div>
   );
 };
-
 export default DashboardPrinc;
