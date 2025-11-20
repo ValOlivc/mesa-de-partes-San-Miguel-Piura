@@ -1,18 +1,18 @@
 {
-    "short_name": "React App",
-    "name": "Create React App Sample",
+    "short_name": "San Miguel",
+    "name": "Mesa de Partes - San Miguel",
     "icons": [{
             "src": "mi-logo.ico",
             "sizes": "64x64 32x32 24x24 16x16",
             "type": "image/x-icon"
         },
         {
-            "src": "logo-san-miguel.jpg",
+            "src": "logo-san-miguel-192.png",
             "type": "image/png",
             "sizes": "192x192"
         },
         {
-            "src": "logo-san-miguel.jpg",
+            "src": "logo-san-miguel-512.png",
             "type": "image/png",
             "sizes": "512x512"
         }
