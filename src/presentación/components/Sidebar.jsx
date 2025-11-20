@@ -1,21 +1,43 @@
 // src/components/Sidebar.jsx
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "../Styles/Sidebar.css";
 import { FaTimes, FaSignOutAlt } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { auth, db } from "../../data/Firebase/firebaseConfig";
 import { signOut } from "firebase/auth";
-import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { addDoc, collection, serverTimestamp, doc, getDoc } from "firebase/firestore";
 import logo from "../../assets/logo-san-miguel.jpg"
 
 const Sidebar = ({ isOpen, onClose }) => {
   const navigate = useNavigate();
+  const [userData, setUserData] = useState(null); // Datos del usuario (rol, permisos, etc.)
 
+  // Obtener datos del usuario desde Firestore
+  useEffect(() => {
+    const fetchUserData = async () => {
+      const user = auth.currentUser;
+      if (user) {
+        try {
+          const userDoc = await getDoc(doc(db, "usuarios", user.uid));
+          if (userDoc.exists()) {
+            setUserData(userDoc.data());
+          } else {
+            console.warn("No se encontró información del usuario");
+          }
+        } catch (error) {
+          console.error("Error al obtener datos del usuario:", error);
+        }
+      }
+    };
+
+    fetchUserData();
+  }, []);
+
+  // Cerrar sesión y registrar en historial
   const handleLogout = async () => {
     const user = auth.currentUser;
 
     try {
-      // 🔹 Guardar el evento en tu colección "historial"
       if (user) {
         await addDoc(collection(db, "historial"), {
           accion: "cierre de sesion",
@@ -30,10 +52,8 @@ const Sidebar = ({ isOpen, onClose }) => {
         });
       }
 
-      // 🔹 Cerrar sesión
       await signOut(auth);
 
-      // 🔹 Redirigir al login y bloquear navegación atrás
       navigate("/", { replace: true });
       window.history.pushState(null, "", "/");
       window.onpopstate = () => navigate("/", { replace: true });
@@ -41,6 +61,13 @@ const Sidebar = ({ isOpen, onClose }) => {
       console.error("Error al registrar o cerrar sesión:", error);
     }
   };
+
+  // Definir menú con roles permitidos
+  const menuItems = [
+    { label: "Inicio", path: "/DashboardPrinc", roles: ["admin", "usuario"] },
+    { label: "Reportes", path: "/Reportes", roles: ["admin"] },
+    { label: "Historial", path: "/HistorialMov", roles: ["admin", "usuario"] },
+  ];
 
   return (
     <div className={`sidebar ${isOpen ? "open" : ""}`}>
@@ -53,10 +80,15 @@ const Sidebar = ({ isOpen, onClose }) => {
           <FaTimes className="close-icon" onClick={onClose} />
         </div>
       </div>
+
       <ul className="sidebar-menu">
-        <li><Link to="/DashboardPrinc" onClick={onClose}>Inicio</Link></li>
-        <li><Link to="/Reportes" onClick={onClose}>Reportes</Link></li>
-        <li><Link to="/HistorialMov" onClick={onClose}>Historial</Link></li>
+        {menuItems.map(item => (
+          item.roles.includes(userData?.rol) && (
+            <li key={item.path}>
+              <Link to={item.path} onClick={onClose}>{item.label}</Link>
+            </li>
+          )
+        ))}
       </ul>
 
       <div className="logout-section">
