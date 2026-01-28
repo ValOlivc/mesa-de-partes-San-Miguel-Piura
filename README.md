@@ -1,70 +1,206 @@
-# Getting Started with Create React App
+# Sistema de Gestión Documental - Mesa de Partes San Miguel
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Sistema web integral para la gestión y seguimiento de trámites documentarios en la institución educativa San Miguel. Desarrollado con React, Firebase y diseño responsivo.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## 🎯 Descripción del Proyecto
 
-### `npm start`
+El Sistema de Gestión Documental de Mesa de Partes es una plataforma web que digitaliza y optimiza el proceso de recepción, clasificación, derivación y seguimiento de documentos administrativos. Permite a diferentes áreas de la institución gestionar trámites de manera eficiente, transparente y en tiempo real.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Características Principales
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- ✅ **Gestión de Trámites**: Registro, seguimiento y actualización de documentos
+- 🔐 **Control de Acceso**: Sistema de autenticación basado en roles
+- 📊 **Reportes en Tiempo Real**: Dashboards interactivos con métricas clave
+- 📎 **Gestión de Adjuntos**: Carga y visualización de documentos PDF
+- 🔔 **Sistema de Notificaciones**: Alertas automáticas para documentos pendientes
+- 📈 **Historial Completo**: Registro las acciones
+- 🎨 **Diseño Responsivo**: Adaptable a diferentes dispositivos
 
-### `npm test`
+## Fotos de las interfaces
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Login - Inicio de Sesión
+*Interfaz de inicio de sesióm con validación de credenciales*
+<img width="1365" height="628" alt="image" src="https://github.com/user-attachments/assets/5145ed82-6fa9-4cfa-9158-e8241d385773" />
 
-### `npm run build`
+---
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Dashboard Principal (Mesa de Partes)
+*Vista general con tarjetas de resumen y tabla de documentos*
+<img width="1365" height="624" alt="image" src="https://github.com/user-attachments/assets/c06cbf77-8298-4963-a201-2e1d8f58feaa" />
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+---
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Detalle de Documento
+*Modal para revisión y asignación de documentos*
+<img width="453" height="592" alt="image" src="https://github.com/user-attachments/assets/b71cc93f-f330-4eff-ae93-250f3cf9dbe7" />
+<img width="428" height="595" alt="image" src="https://github.com/user-attachments/assets/7c9c1246-e843-44a3-8b36-0d942100c215" />
 
-### `npm run eject`
+---
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### Reportes
+*Reportes graficos de los documentos que son ingresados al sistema*
+<img width="1333" height="626" alt="image" src="https://github.com/user-attachments/assets/22df0b89-f333-4d12-adda-a1914a9ce3a8" />
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+---
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### Historial de Movimientos
+*REgistro de las acciones por fecha*
+<img width="1344" height="624" alt="image" src="https://github.com/user-attachments/assets/c9e9b50b-174a-4026-9e56-24009d6b0e94" />
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+---
 
-## Learn More
+## 🛠️ Tecnologías Utilizadas
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### Frontend
+- **React** 18.x - Biblioteca principal de UI
+- **React Router DOM** - Navegación y rutas protegidas
+- **Recharts** - Visualización de datos
+- **React Icons** - Iconografía
+- **CSS3** - Estilos personalizados
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Backend & Base de Datos
+- **Firebase Authentication** - Autenticación de usuarios
+- **Cloud Firestore** - Base de datos NoSQL en tiempo real
+- **Firebase Storage** - Almacenamiento de archivos PDF
 
-### Code Splitting
+### Herramientas de Desarrollo
+- **Create React App** - Configuración inicial
+- **Git** - Control de versiones
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+---
 
-### Analyzing the Bundle Size
+## 📋 Requisitos Previos
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+Antes de comenzar, asegúrate de tener instalado:
 
-### Making a Progressive Web App
+- Node.js (v14 o superior)
+- npm o yarn
+- Cuenta de Firebase con proyecto configurado
+- Git
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+---
 
-### Advanced Configuration
+## ⚙️ Instalación y Configuración
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+### 1. Clonar el Repositorio
 
-### Deployment
+```bash
+git clone https://github.com/tu-usuario/mesa-partes-san-miguel.git
+cd mesa-partes-san-miguel
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+### 2. Instalar Dependencias
 
-### `npm run build` fails to minify
+```bash
+npm install
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### 3. Configurar Variables de Entorno
+
+Crea un archivo `.env` en la raíz del proyecto:
+
+```env
+REACT_APP_FIREBASE_API_KEY=tu_api_key
+REACT_APP_FIREBASE_AUTH_DOMAIN=tu_auth_domain
+REACT_APP_FIREBASE_PROJECT_ID=tu_project_id
+REACT_APP_FIREBASE_STORAGE_BUCKET=tu_storage_bucket
+REACT_APP_FIREBASE_MESSAGING_SENDER_ID=tu_messaging_sender_id
+REACT_APP_FIREBASE_APP_ID=tu_app_id
+```
+
+### 4. Configurar Firebase
+
+1. Crea un proyecto en [Firebase Console](https://console.firebase.google.com/)
+2. Habilita **Authentication** (Email/Password)
+3. Crea una base de datos **Cloud Firestore**
+4. Configura **Storage** para archivos
+5. Copia las credenciales al archivo `.env`
+
+### 5. Ejecutar el Proyecto
+
+```bash
+npm start
+```
+
+La aplicación estará disponible en `http://localhost:3000`
+
+---
+
+## 🗂️ Estructura del Proyecto
+
+```
+src/
+├── assets/                          # Imágenes y recursos estáticos
+│   ├── logo-san-miguel.jpg
+│   └── Colegio-San-Miguel-.jpg
+│
+├── core/
+│   └── services/
+│       └── tramitesService.js       # Servicios de Firestore
+│
+├── data/
+│   └── Firebase/
+│       └── firebaseConfig.js        # Configuración de Firebase
+│
+├── presentación/
+│   ├── components/                  # Componentes reutilizables
+│   │   ├── BarraBusqueda.jsx
+│   │   ├── DetalleDocumento.jsx
+│   │   ├── DetalleFinal.jsx
+│   │   ├── DetalleRespuesta.jsx
+│   │   ├── Header.jsx
+│   │   ├── Sidebar.jsx
+│   │   ├── ModalAsignarArea.jsx
+│   │   ├── ModalRechazo.jsx
+│   │   ├── ModalEnviarAviso.jsx
+│   │   ├── ProtectedRoute.jsx
+│   │   └── TarjetasResumen.jsx
+│   │
+│   ├── pages/                       # Páginas principales
+│   │   ├── Login.jsx
+│   │   ├── DashboardPrinc.jsx
+│   │   ├── DashboardArea.jsx
+│   │   ├── HistorialMov.jsx
+│   │   ├── Reportes.jsx
+│   │   └── AccesoDenegado.jsx
+│   │
+│   ├── Styles/                      # Archivos CSS
+│   │   ├── login.css
+│   │   ├── DashboardPrinc.css
+│   │   ├── DashboardArea.css
+│   │   ├── Header.css
+│   │   ├── Sidebar.css
+│   │   ├── DetalleDocumento.css
+│   │   └── ...
+│   │
+│   └── App.jsx                      # Configuración de rutas
+│
+├── index.jsx                        # Punto de entrada
+└── export.js                        # Script de exportación de Firestore
+```
+
+## 👥 Roles y Permisos
+El sistema maneja tres roles principales:
+
+### 1. **Admin (Mesa de Partes)**
+- Acceso completo al sistema
+- Gestión de todos los documentos
+- Asignación de áreas y prioridades
+- Generación de reportes
+- Visualización del historial completo
+
+**Rutas accesibles:**
+- `/DashboardPrinc`
+- `/Reportes`
+- `/HistorialMov`
+
+### 2. **Secretaría**
+- Gestión de documentos asignados a Secretaría
+- Emisión de respuestas
+- Filtros y búsquedas por fecha
+
+
+
+
