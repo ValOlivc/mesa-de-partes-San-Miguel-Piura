@@ -125,6 +125,7 @@ npm start
 ```
 
 La aplicación estará disponible en `http://localhost:3000`
+actuamente se encuentra disponible es: `https://san-miguel-f34b3.web.app/`
 
 ---
 
