@@ -26,6 +26,7 @@ const DetalleRespuesta = ({ documento, onClose }) => {
   const fut = documento.datosFUT || {};
 
   // 📌 SUBIR PDFs A STORAGE
+  
   const subirPDFs = async () => {
     const auth = getAuth();
     const user = auth.currentUser;
@@ -54,28 +55,26 @@ const DetalleRespuesta = ({ documento, onClose }) => {
   const enviarRespuesta = async () => {
     try {
       setSubiendo(true);
-
       let pdfUrls = [];
       if (pdfsRespuesta.length > 0) {
         pdfUrls = await subirPDFs();
       }
-
       await updateDoc(doc(db, "tramites", documento.id), {
         respuestaArea: {
           texto: respuestaTexto || null,
           pdfs: pdfUrls,
           fechaRespuesta: serverTimestamp(),
         },
-        "areaAsignada.eArea": "Completado", // 🔥 CORRECCIÓN IMPORTANTE
+        "areaAsignada.eArea": "Completado",
       });
 
       alert("Respuesta enviada correctamente ✔");
       onClose();
+
     } catch (error) {
       console.error("Error al enviar respuesta:", error);
       alert("Error al enviar respuesta");
     }
-
     setSubiendo(false);
   };
 

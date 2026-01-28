@@ -26,6 +26,7 @@ const DetalleDocumento = ({ documento, onClose, onActualizarEstado }) => {
   const fut = documento.datosFUT || {};
 
   // ✅ GUARDAR ÁREA ASIGNADA — CORREGIDO
+
   const handleGuardarArea = async ({ area, eArea }) => {
     if (!nExpediente || !prioridad) {
       alert("Por favor ingrese el N° de expediente y seleccione una prioridad antes de asignar un área.");
@@ -63,6 +64,7 @@ const DetalleDocumento = ({ documento, onClose, onActualizarEstado }) => {
       }
 
       setMostrarAsignar(false);
+      
       onClose();
 
     } catch (error) {

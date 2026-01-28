@@ -17,14 +17,14 @@ const DashboardPrinc = () => {
   const [documentosFiltrados, setDocumentosFiltrados] = useState([]); 
   const [selectedDoc, setSelectedDoc] = useState(null);
   const [modalActivo, setModalActivo] = useState(null);
-  const [filtroEstado, setFiltroEstado] = useState("Todos");
+  const [filtroEstado, setFiltroEstado] = useState("Aceptado");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [ordenFechaAsc, setOrdenFechaAsc] = useState(true);
 
   const [fechaInicio, setFechaInicio] = useState("");
   const [fechaFin, setFechaFin] = useState("");
   const [filtroAplicado, setFiltroAplicado] = useState(false); // 🔥 NUEVO
-  const [primeraCarga, setPrimeraCarga] = useState(true); // 🔥 Declarar aquí, arriba del useEffect
+  const [primeraCarga, setPrimeraCarga] = useState(true); 
 
 
   const toDate = (f) => f?.toDate?.() || null;
@@ -76,7 +76,7 @@ const DashboardPrinc = () => {
     });
 
     setDocumentosFiltrados(filtrados);
-    setFiltroAplicado(true); // 🔥 activa la tabla recién aquí
+    setFiltroAplicado(true); 
   };
 
   useEffect(() => {

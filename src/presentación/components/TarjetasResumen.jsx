@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useMemo } from "react";
 import "../Styles/Header.css";
 import { FaFileAlt, FaClock, FaCheckCircle, FaTimesCircle } from "react-icons/fa";
-import { listenTramites } from "../../core/services/tramitesService"; // 👈 IMPORTANTE
+import { listenTramites } from "../../core/services/tramitesService"; 
 
 const TarjetRes = () => {
   const [documentos, setDocumentos] = useState([]);

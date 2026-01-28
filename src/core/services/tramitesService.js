@@ -14,3 +14,5 @@ export const updateTramite = async(id, nuevosDatos) => {
     const ref = doc(db, "tramites", id);
     await updateDoc(ref, nuevosDatos);
 };
+
+
